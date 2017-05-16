@@ -112,37 +112,37 @@
     </div>
     <script type='text/javascript'>
     $("#submitBtn").on('click', function() {
-                var newFriend = {
-                    name: $("#name").val().trim(),
-                    photo: $("#image").val().trim(),
-                    scores: [$("#question1").val().trim(), $("#question2").val().trim(), $("#question3").val().trim(), $("#question4").val().trim(), $("#question5").val().trim()]
-                };
+        var newFriend = {
+            name: $("#name").val().trim(),
+            photo: $("#image").val().trim(),
+            scores: [$("#question1").val().trim(), $("#question2").val().trim(), $("#question3").val().trim(), $("#question4").val().trim(), $("#question5").val().trim()]
+        };
 
-                $.post("api/friends", newFriend)
-                    .done(function(data) {
-                        var oldFriends = [];
-                        for (var i = 0; i < data.length; i++) {
-                            oldFriends.push(data[i].scores);
-                        }
-                        var newScore = 0;
-                        var newScoreArray = [];
+        $.post("api/friends", newFriend)
+            .done(function(data) {
+                var oldFriends = [];
+                for (var i = 0; i < data.length; i++) {
+                    oldFriends.push(data[i].scores);
+                }
+                var newScore = 0;
+                var newScoreArray = [];
 
-                        function initResults(a, b) {
-                            return Math.abs(a - b);
-                        }
-                        for (var i = 0; i < oldFriends.length - 1; i++) {
-                            for (var t = 0; t < 5; t++) {
-                                newScore += initResults(oldFriends[i][t], oldFriends[oldFriends.length - 1][t]);
-                            }
-                            newScoreArray.push(newScore);
-                            newScore = 0;
-                        }
-                        var indexInArray = newScoreArray.indexOf(Math.min(...newScoreArray));
-                        $("#matchName").html(data[indexInArray].name);
-                        $("#imageHolder").html(data[indexInArray].photo);
-                        $("#charModal").modal("toggle");
-                    });
-                });
+                function initResults(a, b) {
+                    return Math.abs(a - b);
+                }
+                for (var i = 0; i < oldFriends.length - 1; i++) {
+                    for (var t = 0; t < 5; t++) {
+                        newScore += initResults(oldFriends[i][t], oldFriends[oldFriends.length - 1][t]);
+                    }
+                    newScoreArray.push(newScore);
+                    newScore = 0;
+                }
+                var indexInArray = newScoreArray.indexOf(Math.min(...newScoreArray));
+                $("#matchName").html(data[indexInArray].name);
+                $("#imageHolder").html(data[indexInArray].photo);
+                $("#charModal").modal("toggle");
+            });
+    });
     </script>
 </body>
 
