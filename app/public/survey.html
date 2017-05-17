@@ -112,6 +112,7 @@
     </div>
     <script type='text/javascript'>
     $("#submitBtn").on('click', function() {
+        event.preventDefault();
         var newFriend = {
             name: $("#name").val().trim(),
             photo: $("#image").val().trim(),
